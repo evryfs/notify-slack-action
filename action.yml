@@ -1,0 +1,15 @@
+name: "Notify slack"
+description: "Post message on a Slack channel"
+inputs:
+  text:
+    description: "Message to send on Slack channel"
+    required: true
+  channel-id:
+    description: "Channel ID where the text will be posted"
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.channel-id }}
+    - ${{ inputs.text }}
