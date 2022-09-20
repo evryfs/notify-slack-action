@@ -30,10 +30,16 @@ fi
 ##
 payload='{"channel": "'$1'", "text": "'$2'"}'
 echo "* Preparing payload: $payload"
-curl -X POST \
+response=`curl -X POST \
   -H "Content-type: application/json" \
   -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
   -d "$payload" \
-  https://slack.com/api/chat.postMessage
-echo "* Slack channel id '$1' has been notified with '$2'"
+  https://slack.com/api/chat.postMessage`
+is_ok=`echo $response | jq '.ok'`
+if [ $is_ok == 'true' ]
+then 
+  echo "* Slack channel id '$1' has been notified with '$2'"
+else
+  log_error "`echo $response | jq '.error'`"
+fi
 exit 0
