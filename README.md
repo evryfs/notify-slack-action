@@ -12,7 +12,7 @@ This action wraps the Slack [chat.postMessage](https://api.slack.com/methods/cha
 - name: Notify Slack
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }} # required
-  uses: rainui28/notify-slack-action@master
+  uses: rainui28/notify-slack-action@<tag>
   with:
     channel-id: <slack-channel-id> # required
     text: <text-to-post> # required
@@ -29,6 +29,8 @@ Here's what the Slack message would look like:
 | SLACK_BOT_TOKEN | x            | secret   | Slack bot token auth                 |
 | channel-id      | x            | string   | Channel where message will be posted |
 | text            | x            | string   | Message to post in the channel       |
+
+**You can find available action's tags [here](https://github.com/rainui28/notify-slack-action/tags)**
 
 ## References
 

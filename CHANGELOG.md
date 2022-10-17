@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1] - 2022-09-20
+## [v0.2.0] - 2022-09-20
 
 ### Added
 - Using GitHub Actions native way of using parameters
@@ -14,5 +14,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `entrypoint.sh` has been updated according to the new parameters
-- `Dockerfile` is using new version of `curlimages/curl:7.84.0`
+- `Dockerfile` is using `alpine:3.16` as base image
 - `README.md` has been updated and simplified

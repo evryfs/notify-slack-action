@@ -1,5 +1,9 @@
-name: "Notify slack"
+name: "Notify Slack channel with a text message"
+author: rainui28
 description: "Post message on a Slack channel"
+branding:
+  color: purple
+  icon: message-circle
 inputs:
   text:
     description: "Message to send on Slack channel"
