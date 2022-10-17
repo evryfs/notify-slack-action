@@ -40,6 +40,6 @@ if [ $is_ok == 'true' ]
 then 
   echo "* Slack channel id '$1' has been notified with '$2'"
 else
-  log_error "`echo $response | jq '.error'`"
+  log_error "SLACK_BOT_ERROR: `echo $response | jq '.error'`"
 fi
 exit 0

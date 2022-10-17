@@ -14,5 +14,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `entrypoint.sh` has been updated according to the new parameters
-- `Dockerfile` is using new version of `curlimages/curl:7.84.0`
+- `Dockerfile` is using `alpine:3.16` as base image
 - `README.md` has been updated and simplified
