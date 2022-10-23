@@ -12,7 +12,7 @@ This action wraps the Slack [chat.postMessage](https://api.slack.com/methods/cha
 - name: Notify Slack
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }} # required
-  uses: rainui28/notify-slack-action@<tag>
+  uses: evryfs/notify-slack-action@<tag>
   with:
     channel-id: <slack-channel-id> # required
     text: <text-to-post> # required
