@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Template mechanism to harmonized GitHub Actions notification
+
 ## [v0.2.0] - 2022-09-20
 
 ### Added

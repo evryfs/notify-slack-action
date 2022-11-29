@@ -8,11 +8,13 @@ This action wraps the Slack [chat.postMessage](https://api.slack.com/methods/cha
 
 ## Usage
 
+### Simple text
+
 ```yaml
 - name: Notify Slack
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }} # required
-  uses: rainui28/notify-slack-action@<tag>
+  uses: evryfs/notify-slack-action@<tag>
   with:
     channel-id: <slack-channel-id> # required
     text: <text-to-post> # required
@@ -22,6 +24,19 @@ Here's what the Slack message would look like:
 
 <img src="docs/images/slack-message-example.png" width="540">
 
+### Using template mechanism
+
+```yaml
+- name: Notify Slack
+  env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }} # required
+  uses: evryfs/notify-slack-action@<tag>
+  with:
+    channel-id: <slack-channel-id> # required
+    text: <text-to-post> # required
+    mechanism: template
+```
+
 ### Parameters
 
 | **Parameter**   | **Required** | **Type** | **Description**                      |
@@ -30,7 +45,18 @@ Here's what the Slack message would look like:
 | channel-id      | x            | string   | Channel where message will be posted |
 | text            | x            | string   | Message to post in the channel       |
 
-**You can find available action's tags [here](https://github.com/rainui28/notify-slack-action/tags)**
+**You can find available action's tags [here](https://github.com/evryfs/notify-slack-action/tags)**
+
+### Environments
+
+When using templates mechanism, you can rely on environments variables to override a template tag.
+
+For instance, in [templates/gh_dashboard_simple.json](./templates/gh_dashboard_simple.json) you can override env `$VERSION_TAG` by doing:
+
+```yaml
+env:
+  VERSION_TAG: v1.0.23
+```
 
 ## References
 
