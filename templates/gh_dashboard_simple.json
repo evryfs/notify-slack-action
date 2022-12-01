@@ -1,0 +1,75 @@
+{
+	"blocks": [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": "#${GITHUB_RUN_NUMBER} $GITHUB_WORKFLOW",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"fields": [
+				{
+					"type": "mrkdwn",
+					"text": "*From branch*\n$GITHUB_REF_NAME"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Version tag*\n$VERSION_TAG"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Triggered by*\n$GITHUB_ACTOR"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Event*\n${GITHUB_EVENT_NAME}"
+				}
+			]
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Status*: ${ACTION_STATUS}"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "> $TEXT_MESSAGE"
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "View changes",
+						"emoji": true
+					},
+					"url": "https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}",
+					"value": "view_changes",
+					"action_id": "button-view-changes"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "View action",
+						"emoji": true
+					},
+					"style": "primary",
+					"url": "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}",
+					"value": "view_action",
+					"action_id": "button-view-action"
+				}
+			]
+		}
+	]
+}
