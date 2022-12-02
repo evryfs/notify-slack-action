@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.)
 
-## [Unreleased]
+## [js-v1.0.0] - 2022-12-02
+
+### Added
+- Mechanism system to include 'templates' and 'blocks' format
+- New `docs/` files have been added
+
+### Changed
+- Action architecture is now using JS (node 16x)
+- `README.md` has been updated and simplified
 
 ## [v0.2.0] - 2022-09-20
 

@@ -1,19 +1,25 @@
 name: "Notify Slack channel with a text message"
 author: rainui28
-description: "Post message on a Slack channel"
+description: "Post (fancy) message in a Slack channel"
 branding:
   color: purple
   icon: message-circle
 inputs:
-  text:
-    description: "Message to send on Slack channel"
-    required: true
   channel-id:
     description: "Channel ID where the text will be posted"
     required: true
+  value:
+    description: |
+      Mechanism delivery expected value:
+      - 'text' -> [Required] message to send in Slack channel. 
+      - 'blocks' -> [Required] either raw json payload that complies Slack API blocks 
+                    format.
+      - 'templates' -> [Required] template filename host on github.com/evryfs/notify-slack-action/templates. 
+    required: true
+  mechanism:
+    description: "Mechanism delivery of the message. Either 'text', 'blocks' or 'templates'"
+    required: false
+    default: text
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.channel-id }}
-    - ${{ inputs.text }}
+  using: 'node16'
+  main: 'index.js'

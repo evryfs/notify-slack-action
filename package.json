@@ -1,0 +1,28 @@
+{
+  "name": "notify-slack-action",
+  "version": "1.0.0",
+  "description": "_Forked from [abinoda/slack-action](https://github.com/abinoda/slack-action)_",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainui28/notify-slack-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainui28/notify-slack-action/issues"
+  },
+  "homepage": "https://github.com/rainui28/notify-slack-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "needle": "^3.2.0"
+  }
+}
