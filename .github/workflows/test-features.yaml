@@ -1,7 +1,12 @@
 # [Usage]
 #   Invoke evryfs/notify-slack-action to test the final result of its features.
 name: Test Bot features
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   CHANNEL_ID: C04DXC2LB35
@@ -10,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Slack with templates
-        uses: evryfs/notify-slack-action@latest
+        uses: evryfs/notify-slack-action@master
         env:
-          TEXT_MESSAGE: "Tests are successful :rocket:"
+          TEXT_MESSAGE: "Tests on features are successful :rocket:"
           ACTION_STATUS: ":thumbsup:"
           VERSION_TAG: ${{ github.sha }}
         with:
@@ -23,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Slack with blocks
-        uses: evryfs/notify-slack-action@latest
+        uses: evryfs/notify-slack-action@master
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           mechanism: blocks
@@ -66,8 +71,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify Slack with text
-        uses: evryfs/notify-slack-action@latest
+        uses: evryfs/notify-slack-action@master
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           mechanism: text
-          value: "Hello GHAbibi from commit ${{ github.sha }}"
+          value: "Hello GHA from commit ${{ github.sha }}"

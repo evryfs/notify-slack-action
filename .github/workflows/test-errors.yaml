@@ -1,0 +1,60 @@
+# [Usage]
+#   Invoke evryfs/notify-slack-action to test expected errors.
+#   Check that the error-handling policy is working well
+name: Test Bot errors
+on:
+  workflow_dispatch:
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  CHANNEL_ID: C04DXC2LB35
+jobs:
+  notify-slack-blocks-templates:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Notify Slack with non-existent templates
+        uses: evryfs/notify-slack-action@master
+        env:
+          TEXT_MESSAGE: "Tests are successful :rocket:"
+          ACTION_STATUS: ":thumbsup:"
+          VERSION_TAG: ${{ github.sha }}
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: templates
+          value: nonexistent_template.json
+  notify-slack-blocks:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Notify Slack with invalid blocks
+        uses: evryfs/notify-slack-action@master
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: blocks
+          value: |
+            {
+              "blocks": [
+                  {
+                      "type": "section",
+                      "text": {
+                          "type": "mrkdwn",
+                          "text": "*#${{ github.run_id }} Anything humans can do in space, robots can do better.*"
+                      }
+                  }
+              ]
+            }
+  notify-result-slack:
+    needs: [notify-slack-blocks-templates, notify-slack-blocks]
+    runs-on: ubuntu-latest
+    if: always()
+    steps: 
+      - name: Notify Slack the result of the errors' tests
+        uses: evryfs/notify-slack-action@master
+        env:
+          ACTION_STATUS: "${{ contains(needs.*.result,'success') && ':thumbsup:' || ':x:' }}"
+          VERSION_TAG: ${{ github.sha }}
+          TEXT_MESSAGE: "Tests on errors are successful :rocket:"
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: templates
+          value: gh_dashboard_simple.json
