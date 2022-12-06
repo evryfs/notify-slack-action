@@ -1,9 +1,6 @@
 const core = require("@actions/core");
 const needle = require("needle");
-
-const getTemplateEnvs = (str) => str.match(/\$\{?([A-Z0-9_]+)\}?/gm);
-
-const trimTemplateEnvs = (envs) => envs.map((env) => env.replace(/\$\{?([A-Z0-9_]+)\}?/, "$1"));
+const templateParser = require("./template");
 
 const call_slack_api = (payload) => {
     const options = {
@@ -39,14 +36,13 @@ const processTemplatesMechanism = (channelId, value) => {
                 core.setFailed(templateMsgStatus);
             } else {
                 core.info(templateMsgStatus);
-                let template = JSON.parse(response.body);
-                let blocks = JSON.stringify(template.blocks);
-                let templateEnvs = getTemplateEnvs(blocks);
-                let envs = trimTemplateEnvs(templateEnvs);
-                templateEnvs.forEach((tEnv, i) => {
-                    blocks = blocks.replaceAll(tEnv, process.env[envs[i]]);
-                });
-                call_slack_api({ channel: channelId, blocks: blocks });
+                let slackPayload = { channel: channelId };
+                let [templateType, templateContent] = Object.entries(JSON.parse(response.body))[0];
+                if (!templateParser.isValidTemplateTypes(templateType)) {
+                    core.setFailed(`Template of type '${templateType}' is not supported`);
+                }
+                slackPayload[templateType] = templateParser.parse(templateContent);
+                call_slack_api(slackPayload);
             }
         }
     });
