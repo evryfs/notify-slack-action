@@ -156,4 +156,4 @@ Slack message would looks like:
 
 ## :memo: License
 
-The Dockerfile and associated scripts and documentation in this project are released under the [MIT License](LICENSE).
+The associated scripts and documentation in this project are released under the [MIT License](LICENSE).

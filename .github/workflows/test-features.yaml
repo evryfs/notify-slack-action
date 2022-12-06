@@ -1,7 +1,12 @@
 # [Usage]
 #   Invoke evryfs/notify-slack-action to test the final result of its features.
 name: Test Bot features
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   CHANNEL_ID: C04DXC2LB35
@@ -12,7 +17,7 @@ jobs:
       - name: Notify Slack with templates
         uses: evryfs/notify-slack-action@latest
         env:
-          TEXT_MESSAGE: "Tests are successful :rocket:"
+          TEXT_MESSAGE: "Tests on features are successful :rocket:"
           ACTION_STATUS: ":thumbsup:"
           VERSION_TAG: ${{ github.sha }}
         with:

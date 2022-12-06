@@ -1,16 +1,16 @@
-const core = require("@actions/core");
+const { getInput, setFailed, info } = require("@actions/core");
 const notifySlack = require("./src/notify");
 
 const main = async () => {
-  try {
-    console.log("::Notify Slack Action::");
-    const channelId = core.getInput("channel-id");
-    const mechanism = core.getInput("mechanism");
-    const value = core.getInput("value");
-    notifySlack[mechanism](channelId, value);
-  } catch (err) {
-    core.setFailed(`Error: ${err}`);
-  }
+    info("\u001b[32;1m::Notify Slack Action::\u001b[0m");
+    try {
+        const channelId = getInput("channel-id");
+        const mechanism = getInput("mechanism");
+        const value = getInput("value");
+        notifySlack[mechanism](channelId, value);
+    } catch (error) {
+        setFailed(`FAILED on inputs: ${error}`);
+    }
 };
 
 main();
