@@ -1,0 +1,73 @@
+# [Usage]
+#   Invoke evryfs/notify-slack-action to test the final result of its features.
+name: Test Bot features
+on: [push, pull_request]
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  CHANNEL_ID: C04DXC2LB35
+jobs:
+  notify-slack-blocks-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack with templates
+        uses: evryfs/notify-slack-action@latest
+        env:
+          TEXT_MESSAGE: "Tests are successful :rocket:"
+          ACTION_STATUS: ":thumbsup:"
+          VERSION_TAG: ${{ github.sha }}
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: templates
+          value: gh_dashboard_simple.json
+  notify-slack-blocks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack with blocks
+        uses: evryfs/notify-slack-action@latest
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: blocks
+          value: |
+            [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*#${{ github.run_id }} Anything humans can do in space, robots can do better.*"
+                }
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "emoji": true,
+                      "text": "Approve"
+                    },
+                    "style": "primary",
+                    "value": "yes"
+                  },
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "emoji": true,
+                      "text": "Deny"
+                    },
+                    "style": "danger",
+                    "value": "no"
+                  }
+                ]
+              }
+            ]
+  notify-slack-text:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack with text
+        uses: evryfs/notify-slack-action@latest
+        with:
+          channel-id: ${{ env.CHANNEL_ID }}
+          mechanism: text
+          value: "Hello GHAbibi from commit ${{ github.sha }}"
