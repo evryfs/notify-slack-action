@@ -3,6 +3,12 @@
 #   Check that the error-handling policy is working well
 name: Test Bot errors
 on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -12,8 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
       - name: Notify Slack with non-existent templates
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         env:
           TEXT_MESSAGE: "Tests are successful :rocket:"
           ACTION_STATUS: ":thumbsup:"
@@ -26,8 +34,10 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
       - name: Notify Slack with invalid blocks
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           mechanism: blocks
@@ -48,8 +58,10 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps: 
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
       - name: Notify Slack the result of the errors' tests
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         env:
           ACTION_STATUS: "${{ contains(needs.*.result,'success') && ':thumbsup:' || ':x:' }}"
           VERSION_TAG: ${{ github.sha }}

@@ -1,11 +1,17 @@
 # [Usage]
 #   Invoke evryfs/notify-slack-action to test the final result of its features.
+#   Use the trigerred event's ref as a version of notify-slack-action.
+#   This allow the following workflow to test current changes
 name: Test Bot features
 on:
   push:
     branches:
       - master
+      - develop
   pull_request:
+    branches:
+      - master
+      - develop
   workflow_dispatch:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -14,8 +20,10 @@ jobs:
   notify-slack-blocks-templates:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
       - name: Notify Slack with templates
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         env:
           TEXT_MESSAGE: "Tests on features are successful :rocket:"
           ACTION_STATUS: ":thumbsup:"
@@ -27,8 +35,12 @@ jobs:
   notify-slack-blocks:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
+        with:
+          ref: develop
       - name: Notify Slack with blocks
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           mechanism: blocks
@@ -70,8 +82,12 @@ jobs:
   notify-slack-text:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout to triggered event's ref
+        uses: actions/checkout@v3
+        with:
+          ref: develop
       - name: Notify Slack with text
-        uses: evryfs/notify-slack-action@master
+        uses: ./
         with:
           channel-id: ${{ env.CHANNEL_ID }}
           mechanism: text
