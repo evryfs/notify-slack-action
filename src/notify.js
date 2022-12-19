@@ -7,7 +7,11 @@ const call_slack_api = (payload) => {
         json: true,
         headers: {
             Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`
-        }
+        },
+        follow: 3,
+        timeout: 10000,
+        response_timeout: 10000,
+        read_timeout: 10000
     };
     needle.post("https://slack.com/api/chat.postMessage", payload, options, (error, response) => {
         if (error) {
@@ -29,6 +33,7 @@ const processTemplatesMechanism = (channelId, value) => {
     const templateUrl = `https://raw.githubusercontent.com/evryfs/notify-slack-action/templates/templates/${value}`;
     needle.get(templateUrl, (error, response) => {
         if (error) {
+            core.debug(error)
             core.setFailed("Template not found on evryfs/notify-slack-action");
         } else {
             const templateMsgStatus = `Download template '${value}' from evryfs/notify-slack-action -- ${response.statusMessage}`;
